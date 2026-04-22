@@ -98,7 +98,7 @@ def seed():
     db.add_all(interactions)
     db.commit()
 
-    print(f"✅ Seeded: {len(hcps)} HCPs, {len(products)} Products, {len(interactions)} Interactions")
+    print(f"[OK] Seeded: {len(hcps)} HCPs, {len(products)} Products, {len(interactions)} Interactions")
     db.close()
 
 
