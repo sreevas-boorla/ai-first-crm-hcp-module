@@ -30,7 +30,7 @@ export default function StructuredForm() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/products')
+    fetch('/api/products')
       .then((r) => r.json())
       .then((data) => setProducts(data))
       .catch(() => {});

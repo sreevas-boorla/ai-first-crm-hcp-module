@@ -1,5 +1,6 @@
 """AI Agent chat endpoint — conversational interface powered by LangGraph."""
-from fastapi import APIRouter
+import traceback
+from fastapi import APIRouter, HTTPException
 from schemas import ChatMessage, ChatResponse
 from agent.graph import run_agent
 
@@ -18,9 +19,14 @@ async def chat_with_agent(msg: ChatMessage):
     - Suggest follow-up actions
     - Look up product information
     """
-    result = await run_agent(message=msg.message, hcp_id=msg.hcp_id)
-    return ChatResponse(
-        reply=result["reply"],
-        interaction_data=result.get("interaction_data"),
-        action_taken=result.get("action_taken"),
-    )
+    try:
+        result = await run_agent(message=msg.message, hcp_id=msg.hcp_id)
+        return ChatResponse(
+            reply=result["reply"],
+            interaction_data=result.get("interaction_data"),
+            action_taken=result.get("action_taken"),
+        )
+    except Exception as e:
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=str(e))
+
