@@ -7,7 +7,7 @@ Architecture:
 import os
 from dotenv import load_dotenv
 from langchain_groq import ChatGroq
-from langchain_core.messages import SystemMessage, HumanMessage
+from langchain_core.messages import SystemMessage, HumanMessage, AIMessage
 from langgraph.graph import StateGraph, END
 from langgraph.prebuilt import ToolNode, tools_condition
 
@@ -117,7 +117,7 @@ async def run_agent(message: str, hcp_id: int = None):
     final_messages = result.get("messages", [])
     ai_reply = ""
     for msg in reversed(final_messages):
-        if hasattr(msg, "content") and msg.content and not hasattr(msg, "tool_calls"):
+        if isinstance(msg, AIMessage) and msg.content and not msg.tool_calls:
             ai_reply = msg.content
             break
 

@@ -7,3 +7,4 @@ langchain-groq==0.3.2
 langchain-core==0.3.51
 langgraph==0.4.1
 httpx==0.28.1
+psycopg2-binary>=2.9,<3
